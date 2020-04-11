@@ -25,7 +25,8 @@ public class RecordService {
     }
 
     public Record findById(Long id) {
-        return addToDBandReturn(id);
+        Optional<Record> record = rr.findBySteamId(id);
+        return record.orElseGet(() -> addToDBandReturn(id));
     }
 
     public Iterable<Record> findAll() {
