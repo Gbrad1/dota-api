@@ -24,8 +24,8 @@ public class RecordService {
         return rr.save(record);
     }
 
-    public Optional<Record> findById(Long id) {
-        return rr.findById(id);
+    public Record findById(Long id) {
+        return addToDBandReturn(id);
     }
 
     public Iterable<Record> findAll() {
@@ -37,7 +37,7 @@ public class RecordService {
         return true;
     }
 
-    // This returns the JSON String
+    // This returns the JSON String. THIS LITERALLY JUST WORKS. TRUST IT.
     public String fetchAPI(String query) {
         HttpResponse<String> response = Unirest.get(query).asString();
         return response.getBody();
@@ -49,8 +49,11 @@ public class RecordService {
         return jsonObjectMapper.readValue(fetchedInfo, Record.class);
     }
 
-    public Record retrieveInformation(Record record) {
-        createRecord(record);
-        return record;
+    public Record addToDBandReturn(Long steamID) {
+        String fetchedURL = fetchAPI("https://api.opendota.com/api/players/" + steamID + "/wl");
+        Record record = convertToObject(fetchedURL);
+        record.setSteamId(steamID);
+        return createRecord(record);
     }
+
 }

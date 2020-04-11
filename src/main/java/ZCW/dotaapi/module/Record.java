@@ -10,10 +10,12 @@ public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
+    Long steamId;
     Integer win;
     Integer lose;
 
-    public Record(Integer win, Integer lose) {
+    public Record( Long steamId, Integer win, Integer lose) {
+        this.steamId = steamId;
         this.win = win;
         this.lose = lose;
     }
@@ -42,5 +44,13 @@ public class Record {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getSteamId() {
+        return steamId;
+    }
+
+    public void setSteamId(Long steamId) {
+        this.steamId = steamId;
     }
 }
