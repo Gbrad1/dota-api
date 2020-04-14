@@ -50,6 +50,7 @@ public class RecordService {
         return jsonObjectMapper.readValue(fetchedInfo, Record.class);
     }
 
+    // Main method to retrieve data and parse.
     public Record addToDBandReturn(Long steamID) {
         String fetchedURL = fetchAPI("https://api.opendota.com/api/players/" + steamID + "/wl");
         Record record = convertToObject(fetchedURL);
